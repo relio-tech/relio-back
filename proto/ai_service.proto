@@ -1,0 +1,61 @@
+syntax = "proto3";
+package relio.ai;
+
+service AiService {
+  rpc StartLiveSession(StartSessionRequest) returns (StartSessionResponse);
+  rpc StreamFrames(stream VideoFrame) returns (stream ScanGuidance);
+  rpc StreamAudio(stream AudioChunk) returns (stream AudioResponse);
+  rpc StopSession(StopSessionRequest) returns (ProcessingStatus);
+  rpc GetProcessingStatus(ProcessingStatusRequest) returns (ProcessingStatus);
+}
+
+message StartSessionRequest {
+  string session_id = 1;
+  string mode = 2;
+  map<string, string> config = 3;
+}
+message StartSessionResponse {
+  string session_id = 1;
+  string status = 2;
+  string agent_greeting = 3;
+}
+message VideoFrame {
+  string session_id = 1;
+  bytes frame_data = 2;
+  int64 timestamp_ms = 3;
+  FrameMetadata metadata = 4;
+}
+message FrameMetadata {
+  float device_orientation_x = 1;
+  float device_orientation_y = 2;
+  float device_orientation_z = 3;
+  bool has_lidar = 4;
+  bytes depth_data = 5;
+}
+message ScanGuidance {
+  string session_id = 1;
+  string message = 2;
+  float scan_progress = 3;
+  string phase = 4;
+  repeated string areas_needed = 5;
+}
+message AudioChunk {
+  string session_id = 1;
+  bytes audio_data = 2;
+  int64 timestamp_ms = 3;
+}
+message AudioResponse {
+  string session_id = 1;
+  bytes audio_data = 2;
+  string transcript = 3;
+  bool is_final = 4;
+}
+message StopSessionRequest { string session_id = 1; }
+message ProcessingStatusRequest { string session_id = 1; }
+message ProcessingStatus {
+  string session_id = 1;
+  string status = 2;
+  float progress = 3;
+  string model_url = 4;
+  string error_message = 5;
+}

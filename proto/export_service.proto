@@ -1,0 +1,13 @@
+syntax = "proto3";
+package relio.export;
+service ExportService {
+  rpc GenerateVideo(VideoRequest) returns (VideoResponse);
+  rpc GenerateImages(ImageRequest) returns (ImageResponse);
+  rpc ExportToShopify(ShopifyExportRequest) returns (ShopifyExportResponse);
+}
+message VideoRequest { string session_id = 1; string model_url = 2; string prompt = 3; string style = 4; }
+message VideoResponse { string video_url = 1; string status = 2; int32 duration_seconds = 3; }
+message ImageRequest { string session_id = 1; string model_url = 2; string prompt = 3; string style = 4; int32 count = 5; }
+message ImageResponse { repeated string image_urls = 1; string status = 2; }
+message ShopifyExportRequest { string session_id = 1; string model_url = 2; string product_title = 3; string product_description = 4; float price = 5; repeated string image_urls = 6; }
+message ShopifyExportResponse { string product_id = 1; string product_url = 2; string status = 3; }

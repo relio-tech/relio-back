@@ -1,0 +1,7 @@
+syntax = "proto3";
+package relio.scan;
+service ScanService {
+  rpc GetScanStatus(ScanStatusRequest) returns (ScanStatusResponse);
+}
+message ScanStatusRequest { string session_id = 1; }
+message ScanStatusResponse { string session_id = 1; string status = 2; float progress = 3; int32 frame_count = 4; }
