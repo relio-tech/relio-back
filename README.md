@@ -20,7 +20,7 @@ Server starts on `http://0.0.0.0:8080`.
 
 ## Prerequisites
 
-- Rust 1.84+
+- Rust 1.94+
 - `protoc` (protobuf compiler)
 
 ## Environment
