@@ -23,12 +23,14 @@ async fn main() {
         .init();
     dotenvy::dotenv().ok();
 
+    let config = config::Config::from_env();
+
     let state = AppState {
         sessions: Arc::new(DashMap::new()),
         ai_client: Arc::new(tokio::sync::RwLock::new(None)),
     };
 
-    let ai_addr = std::env::var("AI_GRPC_URL").unwrap_or_else(|_| "http://relio-ai:50051".into());
+    let ai_addr = config.ai_grpc_url.clone();
     tokio::spawn({
         let state = state.clone();
         async move {
@@ -54,9 +56,9 @@ async fn main() {
         .layer(CorsLayer::permissive())
         .with_state(state);
 
-    let addr = "0.0.0.0:8080";
+    let addr = format!("0.0.0.0:{}", config.port);
     tracing::info!("relio-back listening on {}", addr);
-    let listener = tokio::net::TcpListener::bind(addr).await.unwrap();
+    let listener = tokio::net::TcpListener::bind(&addr).await.unwrap();
     axum::serve(listener, app).await.unwrap();
 }
 

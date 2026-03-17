@@ -38,6 +38,10 @@ Server starts on `http://0.0.0.0:8080`.
 | `/ws` | WebSocket | Client connection |
 | `/health` | HTTP GET | Health check |
 
+## Configuration
+
+All environment variables are loaded via `src/config.rs` (single source of truth). Defaults are used when env vars are not set.
+
 ## Documentation
 
 See [docs/relio-back/](../docs/relio-back/) for full documentation.
