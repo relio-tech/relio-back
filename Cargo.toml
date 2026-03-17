@@ -1,27 +1,30 @@
 [package]
 name = "relio-back"
 version = "0.1.0"
+# Rust edition 2024 — latest stable edition (stabilized in Rust 1.85.0)
 edition = "2024"
 
+# All dependency versions audited 2026-03-17 against crates.io latest stable
 [dependencies]
-axum = { version = "0.8", features = ["ws", "macros"] }
-axum-extra = { version = "0.10", features = ["typed-header"] }
-tokio = { version = "1", features = ["full"] }
-tower = "0.5"
-tower-http = { version = "0.6", features = ["cors", "trace"] }
-tokio-tungstenite = "0.25"
-futures-util = "0.3"
-tonic = "0.13"
-prost = "0.13"
-serde = { version = "1", features = ["derive"] }
-serde_json = "1"
-uuid = { version = "1", features = ["v4", "serde"] }
-chrono = { version = "0.4", features = ["serde"] }
-tracing = "0.1"
-tracing-subscriber = { version = "0.3", features = ["env-filter"] }
-dashmap = "6"
-dotenvy = "0.15"
-base64 = "0.22"
+axum = { version = "0.8", features = ["ws", "macros"] }             # latest: 0.8.8
+axum-extra = { version = "0.12", features = ["typed-header"] }      # updated from 0.10 -> 0.12.5
+tokio = { version = "1", features = ["full"] }                      # latest: 1.50.0
+tower = "0.5"                                                        # latest: 0.5.3
+tower-http = { version = "0.6", features = ["cors", "trace"] }      # latest: 0.6.8
+tokio-tungstenite = "0.28"                                           # updated from 0.25 -> 0.28.0
+futures-util = "0.3"                                                 # latest: 0.3.32
+tonic = "0.14"                                                       # updated from 0.13 -> 0.14.5
+tonic-prost = "0.14"                                                 # runtime codec for tonic 0.14 generated code
+prost = "0.14"                                                       # updated from 0.13 -> 0.14.3
+serde = { version = "1", features = ["derive"] }                    # latest: 1.0.228
+serde_json = "1"                                                     # latest: 1.0.149
+uuid = { version = "1", features = ["v4", "serde"] }               # latest: 1.22.0
+chrono = { version = "0.4", features = ["serde"] }                  # latest: 0.4.44
+tracing = "0.1"                                                      # latest: 0.1.44
+tracing-subscriber = { version = "0.3", features = ["env-filter"] } # latest: 0.3.23
+dashmap = "6"                                                        # latest: 6.1.0
+dotenvy = "0.15"                                                     # latest: 0.15.7
+base64 = "0.22"                                                      # latest: 0.22.1
 
 [build-dependencies]
-tonic-build = "0.13"
+tonic-prost-build = "0.14"  # replaces tonic-build 0.13 — configure() moved here in 0.14

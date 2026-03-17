@@ -1,5 +1,6 @@
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    tonic::build::configure()
+    // tonic-prost-build 0.14 — configure() moved from tonic-build to tonic-prost-build
+    tonic_prost_build::configure()
         .build_server(false)
         .build_client(true)
         .compile_protos(
