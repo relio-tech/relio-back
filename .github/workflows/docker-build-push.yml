@@ -11,7 +11,7 @@ env:
 
 jobs:
   build-push:
-    runs-on: [self-hosted, luftjok]
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
