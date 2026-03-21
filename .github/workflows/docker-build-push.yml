@@ -23,6 +23,11 @@ jobs:
             -H "Content-Type: application/json" \
             -H "X-Deploy-Token: ${{ secrets.ENVS_TOKEN }}" \
             -d '{"repo":"${{ github.event.repository.name }}"}' > .env || true
+          while IFS='=' read -r key value; do
+            if [[ -n "$value" && ! "$key" =~ ^#  ]]; then
+              echo "::add-mask::$value"
+            fi
+          done < .env
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
